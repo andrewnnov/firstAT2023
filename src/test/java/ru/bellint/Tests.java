@@ -1,17 +1,24 @@
 package ru.bellint;
 
+import io.qameta.allure.Feature;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.PageFactory;
 import pages.BellAfterSearch;
 import pages.BellBeforeSearch;
+import pages.PageFactoryBell;
 
 import java.util.List;
 
 public class Tests extends BaseTest {
 
+    @Feature("Проверка тайтла")
     @Test
     public void firstTestTitle() {
         chromeDriver.get("https://bellintegrator.ru/");
@@ -20,6 +27,7 @@ public class Tests extends BaseTest {
         Assertions.assertTrue(title.contains("Bell Integrator"), "Title" + title + " не содержит Bell Integrator");
     }
 
+    @Feature("Проверка результатов поиска")
     @Test
     public void secondTestFind() {
         chromeDriver.get("https://bellintegrator.ru/");
@@ -47,6 +55,7 @@ public class Tests extends BaseTest {
                 "Статьи содержащие текст Кирилл Филенков не найдены");
     }
 
+    @Feature("Проверка результатов поиска")
     @Test
     public void testPO() {
         chromeDriver.get("https://bellintegrator.ru/index.php?route=product/search&description=true&search=");
@@ -55,8 +64,33 @@ public class Tests extends BaseTest {
         BellAfterSearch bellAfterSearch = new BellAfterSearch(chromeDriver);
         Assertions.assertTrue(bellAfterSearch.getResult().stream().anyMatch(x->x.getText().contains("Кирилл Филенков")),
                 "Статьи содержащие текст Кирилл Филенков не найдены");
-
-
     }
+
+    @Feature("Проверка результатов поиска")
+    @DisplayName("Проверка результатов поиска с помощью пейдж обжект")
+    @ParameterizedTest(name = "{displayName} {arguments}")
+    @CsvSource({"RPA, Кирилл Филенков", "Нагрузочное тестирование, Сергей Минаев"})
+    public void testPOParameter(String keyWords, String results) {
+        chromeDriver.get("https://bellintegrator.ru/index.php?route=product/search&description=true&search=");
+        BellBeforeSearch bellBeforeSearch = new BellBeforeSearch(chromeDriver);
+        bellBeforeSearch.find(keyWords);
+        BellAfterSearch bellAfterSearch = new BellAfterSearch(chromeDriver);
+        Assertions.assertTrue(bellAfterSearch.getResult().stream().anyMatch(x->x.getText().contains(results)),
+                "Статьи содержащие текст" + results + " не найдены");
+    }
+
+    @Feature("Проверка результатов поиска")
+    @Test
+    public void testPF() {
+        chromeDriver.get("https://bellintegrator.ru/index.php?route=product/search&description=true&search=");
+        PageFactoryBell pageFactoryBell = PageFactory.initElements(chromeDriver, PageFactoryBell.class);
+        pageFactoryBell.find("RPA");
+        Assertions.assertTrue(pageFactoryBell.getResults().stream().anyMatch(x->x.getText().contains("Кирилл Филенков")),
+                "Статьи содержащие текст Кирилл Филенков не найдены");
+    }
+
+
+
+
 
 }
