@@ -13,9 +13,7 @@ public class HomeTests extends BaseTest {
         chromeDriver.get("https://www.google.com/");
         GoogleBeforeSearch googleBeforeSearch = new GoogleBeforeSearch(chromeDriver);
         googleBeforeSearch.find("Гладиолус");
-
         GoogleAfterSearch googleAfterSearch = new GoogleAfterSearch(chromeDriver);
-        //System.out.println(googleAfterSearch.getResults().get(0).getText());
         Assertions.assertTrue(googleAfterSearch.getResults().stream().anyMatch(x->x.getText().contains("wikipedia.org")));
     }
 }

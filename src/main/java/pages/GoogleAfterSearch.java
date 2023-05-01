@@ -12,19 +12,17 @@ public class GoogleAfterSearch {
 
     WebDriver chromeDriver;
     private List<WebElement> results;
+    WebDriverWait webDriverWait;
 
 
     public GoogleAfterSearch(WebDriver chromeDriver) {
         this.chromeDriver = chromeDriver;
-
+        this.webDriverWait = new WebDriverWait(chromeDriver, 120);
     }
 
-    //WebDriverWait webDriverWait = new WebDriverWait(chromeDriver, 120);
-
-
     public List<WebElement> getResults() {
-//        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(
-//                By.xpath("//div[@id='result-stats']")));
+        webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(
+                By.xpath("//div[@id='result-stats']")));
         results = chromeDriver.findElements(
                 By.xpath("//div[@class='MjjYud']//h3/parent::a"));
         return results;
