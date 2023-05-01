@@ -24,7 +24,7 @@ public class GoogleAfterSearch {
         webDriverWait.until(ExpectedConditions.visibilityOfElementLocated(
                 By.xpath("//div[@id='result-stats']")));
         results = chromeDriver.findElements(
-                By.xpath("//div[@class='MjjYud']//h3/parent::a"));
+                By.xpath("//div[@class='MjjYud']//h3/parent::a[@href]"));
         return results;
     }
 }
