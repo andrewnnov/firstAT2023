@@ -47,13 +47,5 @@ public class HomeTests extends BaseTest {
 
         System.out.println(usdSellD - usdBuyD > 0);
 
-
-
-
-
-
-
-
-
     }
 }

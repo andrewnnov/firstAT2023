@@ -7,9 +7,7 @@ import org.openqa.selenium.WebElement;
 public class GoogleBeforeSearch {
 
     protected WebDriver chromeDriver;
-
     private WebElement searchFieldG;
-
     private WebElement searchButtonG;
 
     public GoogleBeforeSearch(WebDriver chromeDriver) {
