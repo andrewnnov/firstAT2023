@@ -12,9 +12,11 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import pages.BellAfterSearch;
 import pages.BellBeforeSearch;
+import pages.GooglePageWithSearch;
 import pages.PageFactoryBell;
 
 import java.util.List;
+import java.util.Map;
 
 public class Tests extends BaseTest {
 
@@ -89,8 +91,12 @@ public class Tests extends BaseTest {
                 "Статьи содержащие текст Кирилл Филенков не найдены");
     }
 
+    @Test
+    public void testOP() {
+        GooglePageWithSearch googlePageWithSearch = new GooglePageWithSearch(chromeDriver, "открытие");
+        List<Map<String, Object>> resultSearch = googlePageWithSearch.getCollectResults();
+        resultSearch.forEach(x-> System.out.println(x.get("NAME_PAGE").toString()));
+        googlePageWithSearch.goPage("Банк открытие");
 
-
-
-
+    }
 }

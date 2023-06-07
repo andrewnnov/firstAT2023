@@ -46,6 +46,6 @@ public class HomeTests extends BaseTest {
         double usdSellD = Double.parseDouble(usdConvertSell);
 
         System.out.println(usdSellD - usdBuyD > 0);
-
     }
+
 }
